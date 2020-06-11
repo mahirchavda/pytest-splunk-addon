@@ -32,22 +32,45 @@ class HECEventIngestor(EventIngestor):
         Ingests data into splunk using HEC token.
         Args:
             data(dict): data dict with the info of the data to be ingested.
-            data_format::
-                    {
-                        "sourcetype": "sample_HEC",
-                        "source": "sample_source",
-                        "host": "sample_host",
-                        "event": "data to be ingested, can be raw or json"
-                    }
 
-            For batch ingestion provide a list of events to be ingested.
-            data_format::
-                    {
-                        "sourcetype": "sample_HEC",
-                        "source": "sample_source",
-                        "host": "sample_host",
-                        "event": ["event1", "event2", "event3"]
+        For ingesting data at raw or event endpoint using HEC:
+            This format must be followed for ingestion at /services/collector/event endpoint.
+        data_format::
+                {
+                    "sourcetype": "sample_HEC",
+                    "source": "sample_source",
+                    "host": "sample_host",
+                    "event": "data to be ingested, can be raw or json"
+                }
+        
+        For ingestion of metrics data using HEC:
+            Use the /services/collector REST API endpoint to send data to the metrics index.
+            You have to set your metric_name and _value for that measurement in the fields along dict with other dimentions.
+            Do NOT make more than 99,999 events in same timestamp.
+            It will cause Splunk to error on any searches due to more 100K or more events in the index for the same timestamp.
+        data_format::
+                {
+                    "time": 1505501123.000,
+                    "index": "em_metrics",
+                    "event": "metric",
+                    "fields": {
+                        "region": "us-west-1",
+                        "datacenter": "us-west-1a",
+                        "os": "Ubuntu16.10",
+                        "_value":1099511627776,
+                        "metric_name":"total"
                     }
+                }
+
+        For batch ingestion of events via HEC provide a list of events to be ingested with other required info.
+        data_format::
+                {
+                    "sourcetype": "sample_HEC",
+                    "source": "sample_source",
+                    "host": "sample_host",
+                    "index": "metrics_index"
+                    "event": ["event1", "event2", "event3"]
+                }
         """
         try:
             response = requests.post(
