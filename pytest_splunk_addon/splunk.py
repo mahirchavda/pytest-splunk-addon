@@ -468,7 +468,7 @@ def splunk_web_uri(splunk):
     return uri
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="session")
 def splunk_ingest_data(request, splunk_hec_uri, sc4s):
     """
     Generates events for the add-on and ingests into Splunk.
@@ -485,17 +485,24 @@ def splunk_ingest_data(request, splunk_hec_uri, sc4s):
     TODO: For splunk_type=external, data will not be ingested as 
     manual configurations are required.
     """
-    addon_path = request.config.getoption("splunk_app")
-    config_path = request.config.getoption("splunk_data_generator")
+    if ("PYTEST_XDIST_WORKER" not in os.environ or os.environ.get("PYTEST_XDIST_WORKER") == "gw0"):
+        addon_path = request.config.getoption("splunk_app")
+        config_path = request.config.getoption("splunk_data_generator")
 
-    ingest_meta_data = {
-        "session_headers": splunk_hec_uri[0].headers,
-        "splunk_hec_uri": splunk_hec_uri[1],
-        "splunk_host": sc4s[0],  # for sc4s
-        "sc4s_port": sc4s[1][514]  # for sc4s
-    }
-    IngestorHelper.ingest_events(ingest_meta_data, addon_path, config_path, bulk_event_ingestion=False)
+        ingest_meta_data = {
+            "session_headers": splunk_hec_uri[0].headers,
+            "splunk_hec_uri": splunk_hec_uri[1],
+            "splunk_host": sc4s[0],  # for sc4s
+            "sc4s_port": sc4s[1][514]  # for sc4s
+        }
+        IngestorHelper.ingest_events(ingest_meta_data, addon_path, config_path, bulk_event_ingestion=False)
+        if ("PYTEST_XDIST_WORKER" in os.environ):
+            with open(os.environ.get("PYTEST_XDIST_TESTRUNUID") + "_test", "w+"):
+                pass
 
+    else:
+        while not os.path.exists(os.environ.get("PYTEST_XDIST_TESTRUNUID") + "_test"):
+            sleep(1)
 
 @pytest.fixture(scope="class")
 def splunk_ingest_bulk_data(request, splunk_hec_uri, sc4s):
