@@ -345,7 +345,7 @@ def test_splunk_broken_indextime(testdir):
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines_random(
-        constants.TA_BROKEN_INDEXTIME_PASSED + constants.TA_BROKEN_INDEXTIME_PASSED + constants.TA_BROKEN_INDEXTIME_SKIPPED
+        constants.TA_BROKEN_INDEXTIME_PASSED + constants.TA_BROKEN_INDEXTIME_FAILED + constants.TA_BROKEN_INDEXTIME_SKIPPED
     )
     result.assert_outcomes(passed=len(constants.TA_BROKEN_INDEXTIME_PASSED), skipped=len(constants.TA_BROKEN_INDEXTIME_SKIPPED), failed=len(constants.TA_BROKEN_INDEXTIME_FAILED))
 
