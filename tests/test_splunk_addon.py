@@ -4,7 +4,7 @@ import shutil
 import logging
 import pytest
 from tests import constants
-from imp import reload
+import importlib
 import pytest_splunk_addon
 
 logger = logging.getLogger("test_pytest_splunk_addon")
@@ -324,7 +324,7 @@ def test_splunk_indextime_broken(testdir):
                 final += ('{}{}'.format(subindent, f))
         return final
 
-    reload(pytest_splunk_addon)
+    importlib.reload(pytest_splunk_addon)
     testdir.makepyfile(
         """
         from pytest_splunk_addon.standard_lib.addon_basic import Basic
