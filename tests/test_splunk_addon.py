@@ -295,7 +295,7 @@ def test_splunk_indextime_fiction(testdir):
         "--search-interval=0",
         "--search-retry=0",
         "--splunk-data-generator=" + my_conf_path,
-        "-k test_events_with_untokenised_values"
+        "--co"
     )
 
     # fnmatch_lines does an assertion internally
@@ -357,7 +357,7 @@ Directory
         "--search-interval=0",
         "--search-retry=0",
         "--splunk-data-generator=" + my_conf_path,
-        "-k token_not_in_sample"
+        "--co"
     )
 
     # fnmatch_lines does an assertion internally
