@@ -17,7 +17,7 @@ class Basic(FieldTestTemplates, CIMTestTemplates, IndexTimeTestTemplate):
     should inherit it.
     """
     
-    @pytest.mark.first
+    @pytest.mark.last
     @pytest.mark.splunk_indextime
     @pytest.mark.splunk_searchtime_cim
     @pytest.mark.splunk_searchtime_fields
