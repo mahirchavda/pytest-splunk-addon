@@ -266,7 +266,7 @@ def test_splunk_app_cim_broken(testdir):
 
     # The test suite should fail as this is a negative test
     assert result.ret != 0
-@pytest.mark.skip    
+    
 @pytest.mark.docker
 def test_splunk_indextime_fiction(testdir):
     """Make sure that pytest accepts our fixture."""
@@ -331,7 +331,7 @@ def test_splunk_indextime_broken(testdir):
         "-v",
         "--search-interval=0",
         "--search-retry=0",
-        "--splunk-data-generator=tests/addons/TA_broken_indextime/default"
+        "--splunk-data-generator=tests/addons/TA_broken_indextime"
     )
 
     # fnmatch_lines does an assertion internally
