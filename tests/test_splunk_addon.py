@@ -343,12 +343,12 @@ def test_splunk_indextime_broken(testdir):
         app_conf = fff.read()
     with open(os.path.join(testdir.tmpdir, "tests", "addons", "TA_broken_indextime", "default", "pytest-splunk-addon-data.conf")) as fff:
         data_conf = fff.read()
-    raise Exception(f"""
-Directory
-=============
-{list_files(".")}
-=============
-""")
+#     raise Exception(f"""
+# Directory
+# =============
+# {list_files(".")}
+# =============
+# """)
 
     # run pytest with the following cmd args
     result = testdir.runpytest(
