@@ -1,10 +1,10 @@
 {
   "schemaVersion": "2.0.0",
   "info": {
-    "title": "TA_broken_indextime",
+    "title": "TA_indextime",
     "id": {
       "group": null,
-      "name": "TA_broken_indextime",
+      "name": "TA_indextime",
       "version": "0.0.0-dev"
     },
     "author": [
