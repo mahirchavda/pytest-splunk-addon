@@ -314,10 +314,11 @@ def test_splunk_indextime_broken(testdir):
         for root, dirs, files in os.walk(startpath):
             level = root.replace(startpath, '').count(os.sep)
             indent = ' ' * 4 * (level)
-
+            final += "\n"
             final += ('{}{}/'.format(indent, os.path.basename(root)))
             subindent = ' ' * 4 * (level + 1)
             for f in files:
+                final += "\n"
                 final += ('{}{}'.format(subindent, f))
         return final
 
