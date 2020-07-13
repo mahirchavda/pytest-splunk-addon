@@ -541,13 +541,6 @@ TA_FICTION_INDEXTIME_PASSED = [
     '*test_splunk_fiction_indextime.py::Test_App::test_props_fields_no_dash_not_empty*test_scripted_input_sourcetype::field::write_latency* PASSED*',
     '*test_splunk_fiction_indextime.py::Test_App::test_props_fields_no_dash_not_empty*test_scripted_input_sourcetype::field::write_ops* PASSED*',
 ]
-
-"""
-Define the TA_fiction_indextime add-on failed test case list.
-"""
-TA_FICTION_INDEXTIME_FAILED = [
-    
-]
 """
 Define the TA_fiction_indextime add-on skipped test case list.
 """
@@ -560,7 +553,7 @@ TA_FICTION_INDEXTIME_SKIPPED = [
 """
 Define the TA_fiction_indextime_broken add-on passed test case list.
 """
-TA_FICTION_INDEXTIME_BROKEN_PASSED = [
+TA_BROKEN_INDEXTIME_PASSED = [
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_indextime_key_fields*test:indextime:scripted_input_line_breaking::scripted_input_line_breaking.samples_3_to_scripted_input_line_breaking.samples_3* PASSED*',
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_indextime_key_fields*test:indextime:scripted_input_line_breaking::scripted_input_line_breaking.samples_4_to_scripted_input_line_breaking.samples_4* PASSED*',
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_indextime_key_fields*test:indextime:sourcetype:skip_token_or_empty_line::skip_token_or_empty_line.samples_1_to_skip_token_or_empty_line.samples_1* PASSED*',
@@ -591,7 +584,7 @@ TA_FICTION_INDEXTIME_BROKEN_PASSED = [
 """
 Define the TA_fiction_indextime_broken add-on failed test case list.
 """
-TA_FICTION_INDEXTIME_BROKEN_FAILED = [
+TA_BROKEN_INDEXTIME_FAILED = [
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_events_with_untokenised_values FAILED*',
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_indextime_key_fields*test:indextime:failing::failing.samples_1_to_failing.samples_1* FAILED*',
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_indextime_key_fields*test:indextime:failing::failing.samples_2_to_failing.samples_2* FAILED*',
@@ -609,7 +602,7 @@ TA_FICTION_INDEXTIME_BROKEN_FAILED = [
 """
 Define the TA_fiction_indextime_broken add-on skipped test case list.
 """
-TA_FICTION_INDEXTIME_BROKEN_SKIPPED = [
+TA_BROKEN_INDEXTIME_SKIPPED = [
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_cim_required_fields*splunk_searchtime_cim_fields0* SKIPPED*',
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_cim_fields_not_allowed_in_search*splunk_searchtime_cim_fields_not_allowed_in_search0* SKIPPED*',
     '*test_splunk_fiction_indextime_broken.py::Test_App::test_props_fields*splunk_searchtime_fields_positive0* SKIPPED*',
