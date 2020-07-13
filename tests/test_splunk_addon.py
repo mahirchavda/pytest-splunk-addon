@@ -49,45 +49,6 @@ def setup_test_dir(testdir):
         testdir.tmpdir,
     )
 
-@pytest.mark.docker
-def test_splunk_broken_indextime(testdir):
-    """Make sure that pytest accepts our fixture."""
-
-    testdir.makepyfile(
-        """
-        from pytest_splunk_addon.standard_lib.addon_basic import Basic
-        class Test_App(Basic):
-            def empty_method():
-                pass
-
-    """
-    )
-
-    shutil.copytree(
-        os.path.join(testdir.request.fspath.dirname, "addons/TA_broken_indextime"),
-        os.path.join(testdir.tmpdir, "package"),
-    )
-
-    setup_test_dir(testdir)
-
-    # run pytest with the following cmd args
-    result = testdir.runpytest(
-        "--splunk-type=docker",
-        "-v",
-        "--search-interval=0",
-        "--search-retry=0",
-        "--splunk-data-generator=tests/addons/TA_broken_indextime/default"
-    )
-
-    # fnmatch_lines does an assertion internally
-    result.stdout.fnmatch_lines_random(
-        constants.TA_BROKEN_INDEXTIME_PASSED + constants.TA_BROKEN_INDEXTIME_FAILED + constants.TA_BROKEN_INDEXTIME_SKIPPED
-    )
-    result.assert_outcomes(passed=len(constants.TA_BROKEN_INDEXTIME_PASSED), skipped=len(constants.TA_BROKEN_INDEXTIME_SKIPPED), failed=len(constants.TA_BROKEN_INDEXTIME_FAILED))
-
-    # The test suite should fail as this is a negative test
-    assert result.ret != 0
-
 @pytest.mark.skip
 @pytest.mark.external
 def test_splunk_connection_external(testdir):
@@ -306,7 +267,7 @@ def test_splunk_app_cim_broken(testdir):
     # The test suite should fail as this is a negative test
     assert result.ret != 0
 @pytest.mark.docker
-def test_splunk_fiction_indextime(testdir):
+def test_splunk_indextime_fiction(testdir):
     """Make sure that pytest accepts our fixture."""
 
     testdir.makepyfile(
@@ -341,6 +302,45 @@ def test_splunk_fiction_indextime(testdir):
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
+
+@pytest.mark.docker
+def test_splunk_indextime_broken(testdir):
+    """Make sure that pytest accepts our fixture."""
+
+    testdir.makepyfile(
+        """
+        from pytest_splunk_addon.standard_lib.addon_basic import Basic
+        class Test_App(Basic):
+            def empty_method():
+                pass
+
+    """
+    )
+
+    shutil.copytree(
+        os.path.join(testdir.request.fspath.dirname, "addons/TA_broken_indextime"),
+        os.path.join(testdir.tmpdir, "package"),
+    )
+
+    setup_test_dir(testdir)
+
+    # run pytest with the following cmd args
+    result = testdir.runpytest(
+        "--splunk-type=docker",
+        "-v",
+        "--search-interval=0",
+        "--search-retry=0",
+        "--splunk-data-generator=tests/addons/TA_broken_indextime/default"
+    )
+
+    # fnmatch_lines does an assertion internally
+    result.stdout.fnmatch_lines_random(
+        constants.TA_BROKEN_INDEXTIME_PASSED + constants.TA_BROKEN_INDEXTIME_FAILED + constants.TA_BROKEN_INDEXTIME_SKIPPED
+    )
+    result.assert_outcomes(passed=len(constants.TA_BROKEN_INDEXTIME_PASSED), skipped=len(constants.TA_BROKEN_INDEXTIME_SKIPPED), failed=len(constants.TA_BROKEN_INDEXTIME_FAILED))
+
+    # The test suite should fail as this is a negative test
+    assert result.ret != 0
 
 @pytest.mark.skip
 @pytest.mark.docker
