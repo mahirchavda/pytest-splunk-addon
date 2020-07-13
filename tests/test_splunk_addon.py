@@ -338,22 +338,22 @@ def test_splunk_indextime_broken(testdir):
     )
 
     setup_test_dir(testdir)
-    with open(os.path.join(testdir.tmpdir, "package", "default", "app.conf")) as fff:
-        app_conf = fff.read()
-    with open(os.path.join(testdir.tmpdir, "tests", "addons", "TA_broken_indextime", "default", "pytest-splunk-addon-data.conf")) as fff:
-        data_conf = fff.read()
-    raise Exception(f"""
-Apps.conf
-=============
-{app_conf}
-=============
-Directory
-{list_files(os.path.join(testdir.tmpdir, "package"))}
-=============
-Data.conf
-=============
-{data_conf[:200]}
-""")
+#     with open(os.path.join(testdir.tmpdir, "package", "default", "app.conf")) as fff:
+#         app_conf = fff.read()
+#     with open(os.path.join(testdir.tmpdir, "tests", "addons", "TA_broken_indextime", "default", "pytest-splunk-addon-data.conf")) as fff:
+#         data_conf = fff.read()
+#     raise Exception(f"""
+# Apps.conf
+# =============
+# {app_conf}
+# =============
+# Directory
+# {list_files(os.path.join(testdir.tmpdir, "package"))}
+# =============
+# Data.conf
+# =============
+# {data_conf[:200]}
+# """)
 
     # run pytest with the following cmd args
     result = testdir.runpytest(
@@ -361,7 +361,7 @@ Data.conf
         "-v",
         "--search-interval=0",
         "--search-retry=0",
-        "--splunk-data-generator=tests/addons/TA_broken_indextime/default"
+        "--splunk-data-generator=package/default"
     )
 
     # fnmatch_lines does an assertion internally
