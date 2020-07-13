@@ -294,7 +294,7 @@ def test_splunk_indextime_fiction(testdir):
         "-v",
         "--search-interval=0",
         "--search-retry=0",
-        "--splunk-data-generator=tests/addons/TA_fiction_indextime/default"
+        "--splunk-data-generator=package/addons/TA_fiction_indextime/default"
     )
 
     # fnmatch_lines does an assertion internally
@@ -331,7 +331,7 @@ def test_splunk_indextime_broken(testdir):
         "-v",
         "--search-interval=0",
         "--search-retry=0",
-        "--splunk-data-generator=tests/addons/TA_broken_indextime"
+        "--splunk-data-generator=package/addons/TA_broken_indextime"
     )
 
     # fnmatch_lines does an assertion internally
