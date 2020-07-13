@@ -1,5 +1,6 @@
 import time
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+import logging
 
 from . import EventgenParser
 from . import SampleStanza
