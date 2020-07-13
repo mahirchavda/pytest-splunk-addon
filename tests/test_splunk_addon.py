@@ -266,6 +266,7 @@ def test_splunk_app_cim_broken(testdir):
 
     # The test suite should fail as this is a negative test
     assert result.ret != 0
+@pytest.mark.skip    
 @pytest.mark.docker
 def test_splunk_indextime_fiction(testdir):
     """Make sure that pytest accepts our fixture."""
