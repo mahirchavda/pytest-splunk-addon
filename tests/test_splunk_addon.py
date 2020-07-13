@@ -398,6 +398,7 @@ def test_docstrings(testdir):
         testdir.request.config.invocation_dir,
         "docs"
     )
+    
     output_dir = os.path.join(docs_dir, "_build", "html")
     doctree_dir =os.path.join(docs_dir, "_build", "doctrees")
     all_files = 1
