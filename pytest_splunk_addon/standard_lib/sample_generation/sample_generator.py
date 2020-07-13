@@ -4,6 +4,7 @@ from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from . import EventgenParser
 from . import SampleStanza
 from itertools import cycle
+LOGGER = logging.getLogger("pytest-splunk-addon")
 
 class SampleGenerator(object):
     """
@@ -30,6 +31,7 @@ class SampleGenerator(object):
         Generate SampleEvent object
         """
         if not SampleGenerator.sample_stanzas:
+            LOGGER.warn("++++++++ Parsing the conf ")
             eventgen_parser = EventgenParser(self.addon_path, config_path=self.config_path)
             sample_stanzas = list(
                 eventgen_parser.get_sample_stanzas()
@@ -40,5 +42,6 @@ class SampleGenerator(object):
             # with ProcessPoolExecutor(self.process_count) as p:
             _ = list(map(SampleStanza.tokenize, sample_stanzas, cycle([SampleGenerator.conf_name])))
             SampleGenerator.sample_stanzas = sample_stanzas
+        LOGGER.warn("++++++++ Samples already Exist.!")
         for each_sample in SampleGenerator.sample_stanzas:
             yield from each_sample.get_tokenized_events()
