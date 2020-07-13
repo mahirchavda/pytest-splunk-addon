@@ -287,14 +287,14 @@ def test_splunk_indextime_fiction(testdir):
     )
 
     setup_test_dir(testdir)
-
+    my_conf_path = os.path.join(testdir.tmpdir, "package", "default")
     # run pytest with the following cmd args
     result = testdir.runpytest(
         "--splunk-type=docker",
         "-v",
         "--search-interval=0",
         "--search-retry=0",
-        "--splunk-data-generator=tests/addons/TA_fiction_indextime/default",
+        "--splunk-data-generator=" + my_conf_path,
         "-k test_events_with_untokenised_values"
     )
 
@@ -338,6 +338,7 @@ def test_splunk_indextime_broken(testdir):
     )
 
     setup_test_dir(testdir)
+    my_conf_path = os.path.join(testdir.tmpdir, "package", "default")
 #     with open(os.path.join(testdir.tmpdir, "package", "default", "app.conf")) as fff:
 #         app_conf = fff.read()
 #     with open(os.path.join(testdir.tmpdir, "tests", "addons", "TA_broken_indextime", "default", "pytest-splunk-addon-data.conf")) as fff:
@@ -361,8 +362,8 @@ def test_splunk_indextime_broken(testdir):
         "-v",
         "--search-interval=0",
         "--search-retry=0",
-        "--splunk-data-generator=" + os.path.join(testdir.tmpdir, "package", "default"),
-        "-k token_not_in_sample"
+        "--splunk-data-generator=" + my_conf_path,
+        # "-k token_not_in_sample"
     )
 
     # fnmatch_lines does an assertion internally
