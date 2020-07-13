@@ -363,7 +363,7 @@ def test_splunk_indextime_broken(testdir):
         "--search-interval=0",
         "--search-retry=0",
         "--splunk-data-generator=" + my_conf_path,
-        # "-k token_not_in_sample"
+        "-k token_not_in_sample"
     )
 
     # fnmatch_lines does an assertion internally
