@@ -304,6 +304,7 @@ def test_splunk_fiction_indextime(testdir):
     assert result.ret == 0
 
 @pytest.mark.docker
+@pytest.mark.skip
 def test_splunk_fiction_indextime_broken(testdir):
     """Make sure that pytest accepts our fixture."""
 
