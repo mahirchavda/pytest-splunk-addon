@@ -5,7 +5,7 @@ import logging
 import pytest
 from tests import constants
 import importlib
-import pytest_splunk_addon
+from pytest_splunk_addon.standard_lib.sample_generation import SampleGenerator
 
 logger = logging.getLogger("test_pytest_splunk_addon")
 
@@ -324,7 +324,7 @@ def test_splunk_indextime_broken(testdir):
                 final += ('{}{}'.format(subindent, f))
         return final
 
-    importlib.reload(pytest_splunk_addon)
+
     testdir.makepyfile(
         """
         from pytest_splunk_addon.standard_lib.addon_basic import Basic
@@ -340,6 +340,7 @@ def test_splunk_indextime_broken(testdir):
         os.path.join(testdir.tmpdir, "package"),
     )
 
+    SampleGenerator.clean_samples()
     setup_test_dir(testdir)
     my_conf_path = os.path.join(testdir.tmpdir, "package", "default")
     with open(os.path.join(testdir.tmpdir, "package", "default", "app.conf")) as fff:
