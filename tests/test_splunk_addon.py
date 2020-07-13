@@ -266,7 +266,7 @@ def test_splunk_app_cim_broken(testdir):
 
     # The test suite should fail as this is a negative test
     assert result.ret != 0
-@pytest.mark.skip    
+
 @pytest.mark.docker
 def test_splunk_indextime_fiction(testdir):
     """Make sure that pytest accepts our fixture."""
@@ -294,7 +294,8 @@ def test_splunk_indextime_fiction(testdir):
         "-v",
         "--search-interval=0",
         "--search-retry=0",
-        "--splunk-data-generator=tests/addons/TA_fiction_indextime/default"
+        "--splunk-data-generator=tests/addons/TA_fiction_indextime/default",
+        "-k test_events_with_untokenised_values"
     )
 
     # fnmatch_lines does an assertion internally
@@ -307,6 +308,18 @@ def test_splunk_indextime_fiction(testdir):
 @pytest.mark.docker
 def test_splunk_indextime_broken(testdir):
     """Make sure that pytest accepts our fixture."""
+
+    def list_files(startpath):
+        final = ''
+        for root, dirs, files in os.walk(startpath):
+            level = root.replace(startpath, '').count(os.sep)
+            indent = ' ' * 4 * (level)
+
+            final += ('{}{}/'.format(indent, os.path.basename(root)))
+            subindent = ' ' * 4 * (level + 1)
+            for f in files:
+                final += ('{}{}'.format(subindent, f))
+        return final
 
     testdir.makepyfile(
         """
@@ -324,6 +337,17 @@ def test_splunk_indextime_broken(testdir):
     )
 
     setup_test_dir(testdir)
+    with open(os.path.join(testdir.tmpdir, "package", "default", "app.conf")) as fff:
+        app_conf = fff.read()
+    raise Exception(f"""
+Apps.conf
+=============
+{app_conf}
+=============
+Directory
+{list_files(os.path.join(testdir.tmpdir, "package"))}
+=============
+""")
 
     # run pytest with the following cmd args
     result = testdir.runpytest(
