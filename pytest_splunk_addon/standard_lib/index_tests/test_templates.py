@@ -174,6 +174,7 @@ class IndexTimeTestTemplate(object):
             retries=splunk_search_util.search_retry,
         )
         results = list(results)
+        LOGGER.info(f">>>>>>>>>>>>{results}")
 
         result_fields = {
             key: [ceil(float(item[key])) for item in results]
