@@ -306,6 +306,7 @@ def sc4s(request):
     Returns:
         tuple: Details of SC4S which includes sc4s server IP and its related ports.
     """
+    LOGGER.info("JAY: Init SC4S")
     if request.config.getoption("splunk_type") == "external":
         request.fixturenames.append("sc4s_external")
         sc4s = request.getfixturevalue("sc4s_external")
@@ -406,6 +407,7 @@ def sc4s_docker(docker_services, tmp_path_factory, worker_id):
     """
     Provides IP of the sc4s server and related ports based on pytest-args(splunk_type)
     """
+    LOGGER.info("JAY: Starting sc4s docker")
     if worker_id:
         # get the temp directory shared by all workers
         root_tmp_dir = tmp_path_factory.getbasetemp().parent
@@ -414,8 +416,9 @@ def sc4s_docker(docker_services, tmp_path_factory, worker_id):
             if fn.is_file():
                 sleep(10)
 
+    LOGGER.info("JAY: Starting sc4s service")
     docker_services.start("sc4s")
-
+    LOGGER.info("JAY: Started sc4s service")
     ports = {514: docker_services.port_for("sc4s", 514)}
     for x in range(5000, 5007):
         ports.update({x: docker_services.port_for("sc4s", x)})
@@ -503,7 +506,10 @@ def splunk_ingest_data(request, splunk_hec_uri, sc4s):
             "splunk_host": sc4s[0],  # for sc4s
             "sc4s_port": sc4s[1][514]  # for sc4s
         }
+        LOGGER.info("JAY: Ingesting Events")
         IngestorHelper.ingest_events(ingest_meta_data, addon_path, config_path)
+        LOGGER.info("JAY: Ingested events")
+
         sleep(50)
         if ("PYTEST_XDIST_WORKER" in os.environ):
             with open(os.environ.get("PYTEST_XDIST_TESTRUNUID") + "_wait", "w+"):

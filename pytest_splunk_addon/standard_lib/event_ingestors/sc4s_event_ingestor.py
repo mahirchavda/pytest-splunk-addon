@@ -4,6 +4,8 @@ import os
 import re
 import concurrent.futures
 from .base_event_ingestor import EventIngestor
+import logging
+LOGGER = logging.getLogger("pytest-splunk-addon")
 
 THREAD_POOL = 20
 
@@ -44,6 +46,7 @@ class SC4SEventIngestor(EventIngestor):
             _ = list(executor.map(self.ingest_event, raw_events))
 
     def ingest_event(self, event):
+        LOGGER.info("JAY: Starting to ingest data using sc4s")
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)        
         tried = 0
         while True:
@@ -55,5 +58,8 @@ class SC4SEventIngestor(EventIngestor):
                 if tried > 90:
                     raise e
                 sleep(1)
+        LOGGER.info("JAY: Starting to send data throught socket connection..! ")
+
         #sendall sends the entire buffer you pass or throws an exception.
         sock.sendall(str.encode(event))
+        LOGGER.info("JAY: SENT MAN ")
