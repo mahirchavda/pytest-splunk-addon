@@ -56,7 +56,7 @@ class IndexTimeTestTemplate(object):
         record_property("Query", search)
 
         results = splunk_search_util.getFieldValuesList(
-            "search index=* | stats count by sourcetype",
+            "search index=* | stats count by host",
             interval=splunk_search_util.search_interval,
             retries=splunk_search_util.search_retry,
         )
