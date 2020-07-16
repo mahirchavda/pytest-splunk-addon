@@ -56,12 +56,13 @@ class IndexTimeTestTemplate(object):
         record_property("Query", search)
 
         results = splunk_search_util.getFieldValuesList(
-            search,
+            "search index=* | stats count by sourcetype",
             interval=splunk_search_util.search_interval,
             retries=splunk_search_util.search_retry,
         )
         results = list(results)
-
+        raise Exception(str(results))
+        return 
         if not results:
             assert False, "No Events found for query " + search
         result_fields = dict()
