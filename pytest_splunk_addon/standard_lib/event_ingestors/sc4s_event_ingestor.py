@@ -4,6 +4,7 @@ import os
 import re
 import concurrent.futures
 from .base_event_ingestor import EventIngestor
+import logging
 
 THREAD_POOL = 20
 LOGGER = logging.getLogger("pytest-splunk-addon")
