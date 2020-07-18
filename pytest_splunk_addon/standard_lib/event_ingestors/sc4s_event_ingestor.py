@@ -6,7 +6,7 @@ import concurrent.futures
 from .base_event_ingestor import EventIngestor
 
 THREAD_POOL = 20
-
+LOGGER = logging.getLogger("pytest-splunk-addon")
 
 class SC4SEventIngestor(EventIngestor):
     """
@@ -55,5 +55,13 @@ class SC4SEventIngestor(EventIngestor):
                 if tried > 90:
                     raise e
                 sleep(1)
+        
+
+        LOGGER.info("++++++++")
+        LOGGER.info(str(self.splunk_host))
+        LOGGER.info(str(self.sc4s_port))
+        LOGGER.info(str(self.server_address))
+        LOGGER.info(str(event))
+        LOGGER.info("++++++++")
         #sendall sends the entire buffer you pass or throws an exception.
         sock.sendall(str.encode(event))
