@@ -402,17 +402,18 @@ def splunk_external(request):
 
 
 @pytest.fixture(scope="session")
-def sc4s_docker(docker_services, tmp_path_factory, worker_id):
+def sc4s_docker(docker_services):
+# def sc4s_docker(docker_services, tmp_path_factory, worker_id):
     """
     Provides IP of the sc4s server and related ports based on pytest-args(splunk_type)
     """
-    if worker_id:
-        # get the temp directory shared by all workers
-        root_tmp_dir = tmp_path_factory.getbasetemp().parent
-        fn = root_tmp_dir / "docker_service_sc4s"
-        with FileLock(str(fn) + ".lock"):
-            if fn.is_file():
-                sleep(10)
+    # if worker_id:
+    #     # get the temp directory shared by all workers
+    #     root_tmp_dir = tmp_path_factory.getbasetemp().parent
+    #     fn = root_tmp_dir / "docker_service_sc4s"
+    #     with FileLock(str(fn) + ".lock"):
+    #         if fn.is_file():
+    #             sleep(10)
 
     docker_services.start("sc4s")
 
