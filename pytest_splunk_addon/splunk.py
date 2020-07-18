@@ -421,6 +421,12 @@ def sc4s_docker(docker_services):
     for x in range(5000, 5007):
         ports.update({x: docker_services.port_for("sc4s", x)})
 
+    LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    LOGGER.info(str(docker_services))
+    LOGGER.info(str(docker_services.docker_ip))
+    LOGGER.info(str(ports))
+    LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
     return docker_services.docker_ip, ports
 
 
